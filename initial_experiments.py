@@ -55,9 +55,9 @@ print("2", Agent.next_state(binary_embeddings[2], LABEL=np.zeros(10), DD=False, 
 
 # we should add reset states, and if we add reset states .next_state should be set with unsequenced=True
 Agent.reset_state()
-print("1 ", Agent.next_state(binary_embeddings[1], DD=True, print_result=True, unsequenced=True))
+print("1 ", Agent.next_state(binary_embeddings[1], DD=False, print_result=True, unsequenced=True))
 Agent.reset_state()
-print("3 ", Agent.next_state(binary_embeddings[2], DD=True, print_result=True, unsequenced=True))
+print("3 ", Agent.next_state(binary_embeddings[2], DD=False, print_result=True, unsequenced=True))
 
 
 

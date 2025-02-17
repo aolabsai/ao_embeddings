@@ -5,7 +5,7 @@ import binaryEmbeddings as be
 import numpy as np
 
 description = "Basic Semantics"
-arch_i = [64]     # 3 neurons, 1 in each of 3 channels, corresponding to Food, Chemical-A, Chemical-B (present=1/not=0)
+arch_i = [256]     # 3 neurons, 1 in each of 3 channels, corresponding to Food, Chemical-A, Chemical-B (present=1/not=0)
 arch_z = [10]           # corresponding to Open=1/Close=0
 arch_c = []           # adding 1 control neuron which we'll define with the instinct control function below
 connector_function = "full_conn"
@@ -17,11 +17,11 @@ Arch = ar.Arch(arch_i, arch_z, arch_c, connector_function, description)
 # Initialize Agent
 Agent = ao.Agent(Arch, save_meta=True)
 
-embeddingToBinary = be.binaryEmbeddings(openai_api_key)
+embeddingToBinary = be.binaryEmbeddings(openai_api_key, numberBinaryDigits=256)
 
 # List of words
-words = ["dog", "pets", "house", "brick"]
-#words = ["Hat", "Scarf", "house", "brick"]
+#words = ["pet", "pets", "house", "home"]
+words = ["Phone", "Tablet", "Clothes", "Shirt"]
 
 binary_embeddings = []
 
@@ -40,10 +40,10 @@ Agent.next_state(binary_embeddings[2], LABEL=np.zeros(10), DD=False, unsequenced
 
 # we should add reset states, and if we add reset states .next_state should be set with unsequenced=True
 Agent.reset_state()
-print("---1---")
+print(f"---{words[1]}---")
 Agent.next_state(binary_embeddings[1], DD=False, print_result=True, unsequenced=True)
 Agent.reset_state()
-print("---3---")
+print(f"---{words[3]}---")
 Agent.next_state(binary_embeddings[3], DD=False, print_result=True, unsequenced=True)
 
 

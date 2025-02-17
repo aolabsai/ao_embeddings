@@ -12,7 +12,7 @@ class binaryEmbeddings():
         client = OpenAI(api_key = openai_api_key,)
         self.cacheName=cacheName
         self.loadCache()
-        self.lsh = GaussianRandomProjection(n_components=numberBinaryDigits)
+        self.lsh = GaussianRandomProjection(n_components=numberBinaryDigits, random_state=42)
 
     def loadCache(self):
         if os.path.exists(self.cacheName):
@@ -47,7 +47,7 @@ class binaryEmbeddings():
 
             # Initialize and fit LSH model
         self.lsh.fit(embedding)
-        projected_embedding = self.lsh.transform(embedding.reshape(1, -1)) 
+        projected_embedding = self.lsh.transform(embedding.reshape(1, -1))
         binary_embedding = (projected_embedding > 0).astype(int).flatten().tolist()  # Convert to list
 
         return binary_embedding

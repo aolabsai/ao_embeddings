@@ -7,11 +7,12 @@ import json
 EMBEDDING_MODEL = "text-embedding-3-small"
 
 class binaryEmbeddings():
-    def __init__(self, openai_api_key, cacheName="embeddingCache.json"):
+    def __init__(self, openai_api_key, cacheName="embeddingCache.json", numberBinaryDigits=64):
         global client 
         client = OpenAI(api_key = openai_api_key,)
         self.cacheName=cacheName
         self.loadCache()
+        self.lsh = GaussianRandomProjection(n_components=numberBinaryDigits)
 
     def loadCache(self):
         if os.path.exists(self.cacheName):
@@ -45,9 +46,8 @@ class binaryEmbeddings():
         embedding = np.array(embedding).reshape(1, -1)
 
             # Initialize and fit LSH model
-        lsh = GaussianRandomProjection(n_components=64)
-        lsh.fit(embedding)
-        projected_embedding = lsh.transform(embedding.reshape(1, -1)) 
+        self.lsh.fit(embedding)
+        projected_embedding = self.lsh.transform(embedding.reshape(1, -1)) 
         binary_embedding = (projected_embedding > 0).astype(int).flatten().tolist()  # Convert to list
 
         return binary_embedding

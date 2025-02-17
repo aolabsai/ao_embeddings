@@ -20,8 +20,8 @@ Agent = ao.Agent(Arch, save_meta=True)
 embeddingToBinary = be.binaryEmbeddings(openai_api_key)
 
 # List of words
-# words = ["dog", "dog food", "spaceship", "space"]
 words = ["dog", "cat", "house", "brick"]
+#words = ["Hat", "Scarf", "house", "brick"]
 
 binary_embeddings = []
 
@@ -34,15 +34,17 @@ for word in words:
 print("Binary Embeddings: ", binary_embeddings)
 print("Length encoding: ", len(binary_embeddings[0]))
 
-print("0 ", Agent.next_state(binary_embeddings[0], LABEL=np.ones(10), DD=False, print_result=True, unsequenced=True))
+Agent.next_state(binary_embeddings[0], LABEL=np.ones(10), DD=False, unsequenced=True)
 Agent.reset_state()
-print("2", Agent.next_state(binary_embeddings[2], LABEL=np.zeros(10), DD=False, print_result=True, unsequenced=True))
+Agent.next_state(binary_embeddings[2], LABEL=np.zeros(10), DD=False, unsequenced=True)
 
 # we should add reset states, and if we add reset states .next_state should be set with unsequenced=True
 Agent.reset_state()
-print("1 ", Agent.next_state(binary_embeddings[1], DD=False, print_result=True, unsequenced=True))
+print("---1---")
+Agent.next_state(binary_embeddings[1], DD=False, print_result=True, unsequenced=True)
 Agent.reset_state()
-print("3 ", Agent.next_state(binary_embeddings[2], DD=False, print_result=True, unsequenced=True))
+print("---3---")
+Agent.next_state(binary_embeddings[3], DD=False, print_result=True, unsequenced=True)
 
 
 

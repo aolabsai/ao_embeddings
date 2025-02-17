@@ -20,7 +20,7 @@ Agent = ao.Agent(Arch, save_meta=True)
 embeddingToBinary = be.binaryEmbeddings(openai_api_key)
 
 # List of words
-words = ["dog", "cat", "house", "brick"]
+words = ["dog", "pets", "house", "brick"]
 #words = ["Hat", "Scarf", "house", "brick"]
 
 binary_embeddings = []

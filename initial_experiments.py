@@ -1,7 +1,7 @@
 import ao_core as ao
 import ao_arch as ar
 from config import openai_api_key
-import binaryEmbeddings as be
+import ao_embeddings.binaryEmbeddings as be
 import numpy as np
 
 description = "Basic Semantics"
@@ -21,7 +21,7 @@ embeddingToBinary = be.binaryEmbeddings(openai_api_key, numberBinaryDigits=256)
 
 # List of words
 #words = ["pet", "pets", "house", "home"]
-words = ["Phone", "Tablet", "Clothes", "Shirt"]
+words = ["", "Helicopter", "Clothes", "Shirt"]
 
 binary_embeddings = []
 

@@ -41,6 +41,27 @@ class binaryEmbeddings():
             self.saveCache()
         return response.data[0].embedding
 
+    def get_embedding_batch(self, words, cache=True):
+        keys = str(words)
+        # if keys in self.cache:
+        #     print("found text in cache")
+        #     return self.cache[keys]
+        
+        response = client.embeddings.create(
+            input=words,
+            model=EMBEDDING_MODEL
+        )
+        
+        # Extract all embeddings from the response
+        embeddings = [item.embedding for item in response.data]
+        
+        # if cache:
+        #     self.cache[keys] = embeddings
+        #     self.saveCache()
+        
+        return embeddings
+
+
 
     def embeddingToBinary(self, embedding):
         embedding = np.array(embedding).reshape(1, -1)
@@ -51,3 +72,14 @@ class binaryEmbeddings():
         binary_embedding = (projected_embedding > 0).astype(int).flatten().tolist()  # Convert to list
 
         return binary_embedding
+    
+    def embeddingsToBinaryBatch(self, embeddings):
+        embeddings = np.array(embeddings)
+        
+        self.lsh.fit(embeddings)
+        
+        projected_embeddings = self.lsh.transform(embeddings)
+        
+        binary_embeddings = (projected_embeddings > 0).astype(int).tolist()
+        
+        return binary_embeddings
